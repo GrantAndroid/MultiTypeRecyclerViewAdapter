@@ -1,0 +1,48 @@
+apply plugin: 'com.android.library'
+apply plugin: 'bintray-release'
+
+def configs = rootProject.ext.android //android配置
+def libs = rootProject.ext.dependencies //依赖库配置
+def bintrays = rootProject.ext.bintray //bintray配置
+android {
+    compileSdkVersion configs.compileSdkVersion
+    buildToolsVersion configs.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion configs.libMinSdkVersion
+        targetSdkVersion configs.targetSdkVersion
+        versionCode 1
+        versionName bintrays.publishVersion
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    provided 'com.android.support:recyclerview-v7:26.0.0-alpha1'
+    provided libs.diffutil
+    provided project(libs.MTRVA_File_Anno)
+}
+
+publish {
+    artifactId = 'multitypeadapter'
+    userOrg = bintrays.userOrg
+    groupId = bintrays.groupId
+    uploadName = bintrays.uploadName
+    publishVersion = bintrays.publishVersion
+    desc = bintrays.desc
+    website = bintrays.website
+    licences = bintrays.licences
+}
+

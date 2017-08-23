@@ -1,0 +1,20 @@
+apply plugin: 'java'
+apply plugin: 'bintray-release'
+def bintrays = rootProject.ext.bintray //bintray配置
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+publish {
+    artifactId = 'multitypeadapter-annotation'
+    userOrg = bintrays.userOrg
+    groupId = bintrays.groupId
+    uploadName = bintrays.uploadName
+    publishVersion = bintrays.publishVersion
+    desc = bintrays.desc
+    website = bintrays.website
+    licences = bintrays.licences
+}
